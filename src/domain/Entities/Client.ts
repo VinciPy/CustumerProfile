@@ -1,27 +1,33 @@
-import Devices from "./Devices";
+import Cpf from "./Cpf";
+import Device from "./Device";
 import Location from "./Location";
 import Visit from "./Visit";
 
 export default class Cliente {
-    private _UUID: string;
+
+    private UUID: string;
+    private Cellphone: string;
+    private Cpf: Cpf;
     private Location: Location;
-    private Devices: Devices[];
+    private Devices: Device[];
     private Visits: Visit[];
     private FirstVisit: Visit;
 
     public getFirstVisit(): Visit {
-        return this.FirstVisit;
-    }
+        
+      return this.FirstVisit;
+    };
+
     public setFirstVisit(value: Visit) {
         this.FirstVisit = value;
     }
 
     public getUUID(): string {
-        return this._UUID;
+        return this.UUID;
     }
 
     public setUUID(value: string) {
-        this._UUID = value;
+        this.UUID = value;
     }
 
     public getLocation(): Location {
@@ -31,23 +37,29 @@ export default class Cliente {
     public setLocation(value: Location) {
         this.Location = value;
     }
-    public getDevices(): Devices[] {
+    
+    public getDevices(): Device[] {
         return this.Devices;
     }
 
-    public setDevices(value: Devices[]) {
+    public setDevices(value: Device[]) {
         this.Devices = value;
     }
 
     public getVisits(): Visit[] {
         return this.Visits;
     }
+
     public setVisits(value: Visit[]) {
         this.Visits = value;
     }
 
-    constructor() {
-        
+    constructor(UUID:string, Location: Location, Devices: Device[], Visits: Visit[], FirstVisit: Visit[]) {
+        this.UUID = UUID;
+        this.Location = Location;
+        this.Devices = Devices;
+        this.Visits = Visits;
+        this.FirstVisit = FirstVisit;
     };
 
 }
