@@ -1,4 +1,5 @@
 import Client from "../domain/Entities/Client";
+import Device from "../domain/Entities/Device";
 import Visit from "../domain/Entities/Visit";
 import ClientRepository from "../domain/Repository/ClientRepository";
 import Checker from "./Checker";
@@ -7,6 +8,7 @@ export default class CheckerVisit implements Checker {
   Visit: Visit;
   ClientRepository: ClientRepository;
   Client: Client;
+  Device: Device;
 
   constructor(Visit: Visit, ClientRepository: ClientRepository) {
     this.Visit = Visit;
@@ -16,8 +18,15 @@ export default class CheckerVisit implements Checker {
   async verifyCustomer(): Promise<boolean | Client> {
     let ipExist = await this.ipExist();
     let SocialAccount = await this.SocialAccountExist();
+    let Device = await this.DeviceExist();
     if (SocialAccount && ipExist) {
       return SocialAccount;
+    }
+    if (ipExist && Device) {
+      return Device;
+    }
+    if (SocialAccount && Device) {
+      return Device;
     }
   }
 
@@ -32,6 +41,14 @@ export default class CheckerVisit implements Checker {
   async SocialAccountExist() {
     let client = await this.ClientRepository.findBySocialAccount(
       this.Visit.getSocialAccount()
+    );
+    if (!client) return false;
+    return client;
+  }
+
+  async DeviceExist() {
+    let client = await this.ClientRepository.findByDevice(
+      this.Visit.getDevice()
     );
     if (!client) return false;
     return client;

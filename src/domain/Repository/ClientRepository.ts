@@ -1,4 +1,5 @@
 import Client from "../Entities/Client";
+import Device from "../Entities/Device";
 import SocialAccount from "../Entities/SocialAccount";
 
 export default interface ClientRepository {
@@ -7,4 +8,6 @@ export default interface ClientRepository {
   findBySocialAccount(
     SocialAccount: SocialAccount
   ): Promise<Client | undefined>;
+
+  findByDevice(Device: Device): Promise<Client | undefined>;
 }

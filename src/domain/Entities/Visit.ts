@@ -1,3 +1,4 @@
+import Device from "./Device";
 import SocialAccount from "./SocialAccount";
 
 enum Types {
@@ -11,6 +12,14 @@ export default class Visit {
   private Location: Location;
   private Type: Types;
   private SocialAccount: SocialAccount;
+  private Device: Device;
+
+  public getDevice(): Device {
+    return this.Device;
+  }
+  public setDevice(value: Device) {
+    this.Device = value;
+  }
 
   public getSocialAccount(): SocialAccount {
     return this.SocialAccount;
