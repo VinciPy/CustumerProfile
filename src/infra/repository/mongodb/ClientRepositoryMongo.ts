@@ -7,10 +7,11 @@ import mongoose from "mongoose";
 
 export default class ClientRepositoryMongo implements ClientRepository {
   db;
+  Client: any;
 
   constructor(MongoDB: MongoDB) {
     this.db = MongoDB.getMongoose();
-    const Client = this.db.model("Client", {
+    this.Client = this.db.model("Client", {
       UUID: String,
       Name: String,
       Cellphone: String,
@@ -57,13 +58,37 @@ export default class ClientRepositoryMongo implements ClientRepository {
       ],
     });
   }
-  findByIpAddress(IpAddress: string): Promise<Client> {
-    throw new Error("Method not implemented.");
+
+  async add(Client: Client): Promise<Client> {
+    let client = new this.Client(Client);
+    return await client.save();
   }
-  findBySocialAccount(SocialAccount: SocialAccount): Promise<Client> {
-    throw new Error("Method not implemented.");
+
+  async findByUUID(Client: Client): Promise<Client> {
+    return await this.Client.findById(Client.getUUID());
   }
-  findByDevice(Device: Device): Promise<Client> {
-    throw new Error("Method not implemented.");
+
+  async findAndUpdate(Client: Client, ClientNew: Client): Promise<Client> {
+    return await this.Client.findByIdAndUpdate(Client.getUUID(), {
+      Client,
+    }).exec();
+  }
+
+  async findByIpAddress(IpAddress: string): Promise<Client> {
+    return await this.Client.find({ IpAddress: IpAddress }).exec();
+  }
+
+  async findBySocialAccount(SocialAccount: SocialAccount): Promise<Client> {
+    return await this.Client.find({
+      SocialAccount: SocialAccount.getUUID(),
+    }).exec();
+  }
+
+  async findByDevice(Device: Device): Promise<Client> {
+    return await this.Client.find({ "Devices.UUID": Device.getUUID() }).exec();
+  }
+
+  async all() {
+    return await this.Client.find().exec();
   }
 }
