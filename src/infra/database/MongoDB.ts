@@ -7,12 +7,9 @@ export default class MongoDB implements Connection {
   public getMongoose() {
     return this.mongoose;
   }
-  public setMongoose(value: any) {
-    this.mongoose = value;
-  }
 
   connect() {
     this.mongoose = mongoose;
-    mongoose.connect("mongo:27017");
+    mongoose.connect("mongodb://root:1234@mongo:27017");
   }
 }

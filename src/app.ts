@@ -16,7 +16,8 @@ const port = process.env.PORT || 3000;
 let db = new MongoDB();
 db.connect();
 const Cat = db.getMongoose().model("Cat", { name: String });
-
+var collections = db.getMongoose().connections[0].collections;
+//console.log(collections);
 const kitty = new Cat({ name: "Zildjian" });
 kitty.save().then(() => console.log("meow"));
 
@@ -68,4 +69,4 @@ const consumir = async () => {
     },
   });
 };
-consumir();
+//consumir();
