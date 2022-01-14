@@ -1,17 +1,18 @@
+import InteractionAdapter from "../../adapters/InteractionAdapter";
+import CustomerInteraction from "../../application/core/CustomerInteraction";
 import kafka from "./Kafka";
 
-const consumer = kafka.consumer({ groupId: "teste" });
+const consumer = kafka.consumer({ groupId: "customerProfile" });
 
-const consumir = async () => {
+const listen = async (db) => {
   await consumer.connect();
-  await consumer.subscribe({ topic: "teste" });
+  await consumer.subscribe({ topic: "customerProfile" });
   await consumer.run({
     eachMessage: async ({ topic, partition, message }: any) => {
-      console.log({
-        value: message.value.toString(),
-      });
+      let message_value = message.value.toString();
+      new CustomerInteraction(message_value, db);
     },
   });
 };
 
-export default consumir;
+export default listen;

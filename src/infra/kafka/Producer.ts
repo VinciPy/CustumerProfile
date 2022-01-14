@@ -1,11 +1,11 @@
 import kafka from "./Kafka";
 
-const producer = async (message) => {
+const producer = async (message: string) => {
   const producer = kafka.producer();
 
   await producer.connect();
   await producer.send({
-    topic: "teste",
+    topic: "customerProfile",
     messages: [{ value: message }],
   });
 };

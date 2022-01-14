@@ -10,6 +10,6 @@ export default class MongoDB implements Connection {
 
   connect() {
     this.mongoose = mongoose;
-    mongoose.connect("mongodb://root:1234@mongo:27017");
+    mongoose.connect("mongodb://root:MongoDB2019!@mongo:27017");
   }
 }

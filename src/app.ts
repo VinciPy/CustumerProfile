@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import MongoDB from "./infra/database/MongoDB";
-import consumir from "./infra/kafka/Consumer";
+import listen from "./infra/kafka/Consumer";
 import producer from "./infra/kafka/Producer";
 import ClientRepositoryMongo from "./infra/repository/mongodb/ClientRepositoryMongo";
 /**
@@ -43,4 +43,4 @@ app.get("/cliente/:UUID", (req: any, res: any) => {
 
 app.listen(port);
 
-consumir();
+listen(db);
