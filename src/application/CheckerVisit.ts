@@ -7,15 +7,13 @@ import Checker from "./Checker";
 export default class CheckerVisit implements Checker {
   Visit: Visit;
   ClientRepository: ClientRepository;
-  Client: Client;
-  Device: Device;
 
   constructor(Visit: Visit, ClientRepository: ClientRepository) {
     this.Visit = Visit;
     this.ClientRepository = ClientRepository;
   }
 
-  async verifyCustomer(): Promise<boolean | Client> {
+  async verifyCustomer(): Promise<undefined | Client> {
     let ipExist = await this.ipExist();
     let SocialAccount = await this.SocialAccountExist();
     let Device = await this.DeviceExist();

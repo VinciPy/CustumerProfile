@@ -2,7 +2,7 @@ import Client from "../domain/Entities/Client";
 import Checker from "./Checker";
 
 export default class CheckerInteraction implements Checker {
-  verifyCustomer(params: any): Promise<boolean | Client> {
+  verifyCustomer(): Promise<Client | undefined> {
     throw new Error("Method not implemented.");
   }
 }
