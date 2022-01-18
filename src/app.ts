@@ -20,20 +20,34 @@ let db = new MongoDB();
 db.connect();
 let client = new ClientRepositoryMongo(db);
 
-app.get("/", (req: Request, res: Response) => {
-  let clients = client.all();
-  res.status(200).send({
-    success: "true",
-    message: JSON.stringify(clients),
-  });
+app.get("/", async (req: Request, res: Response) => {
+  try {
+    let clients = await client.all();
+    res.status(200).send({
+      success: "true",
+      message: clients,
+    });
+  } catch (exception) {
+    res.status(500).send({
+      success: "false",
+      message: `error ${exception}`,
+    });
+  }
 });
 
 app.post("/", (req: Request, res: Response) => {
-  producer(req.body);
-  res.status(200).send({
-    success: "true",
-    message: "Notification has benn add to que",
-  });
+  try {
+    producer(req.body);
+    res.status(200).send({
+      success: "true",
+      message: "Notification has been add to queue",
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: "false",
+      message: `error ${e}`,
+    });
+  }
 });
 
 app.get("/cliente/:UUID", (req: any, res: any) => {
@@ -45,5 +59,4 @@ app.get("/cliente/:UUID", (req: any, res: any) => {
 });
 
 app.listen(port);
-
-listen(db);
+listen(client);

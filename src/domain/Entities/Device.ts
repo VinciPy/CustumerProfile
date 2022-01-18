@@ -1,11 +1,12 @@
 export default class Device {
   Tipo: string;
-  IpAddress: string;
+  Description: string;
   private UUID: string;
 
-  constructor(UUID: string, Tipo: string) {
+  constructor(UUID: string, Tipo: string, Description: string) {
     this.UUID = UUID;
-    Tipo = this.Tipo;
+    this.Tipo = Tipo;
+    this.Description = Description;
   }
 
   public getUUID(): string {
@@ -14,5 +15,9 @@ export default class Device {
 
   public setUUID(value: string) {
     this.UUID = value;
+  }
+
+  public getTipo(): string {
+    return this.Tipo;
   }
 }

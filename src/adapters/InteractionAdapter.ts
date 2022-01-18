@@ -4,7 +4,7 @@ import Adapter from "./Adapter";
 
 export default class InteractionAdapter implements Adapter {
   constructor(Interaction: object) {}
-  adapt(interaction: object): Interaction | Visit {
+  adapt(): Interaction | Visit {
     throw new Error("Method not implemented.");
   }
 }

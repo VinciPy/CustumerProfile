@@ -45,7 +45,7 @@ cd .. && docker-compose up -d
 Mencione as ferramentas que você usou para criar seu projeto
 
 - [NodeJs](https://nodejs.org/en/) - O ambiente js usado
-- [Expres](https://expressjs.com/pt-br/) - O framework web usado
+- [Express](https://expressjs.com/pt-br/) - O framework web usado
 - [Apache Kafka](https://kafka.apache.org/) - Brokder de Menssegira
 - [Mongoose](https://mongoosejs.com/) - Helper do Mongo Db
 

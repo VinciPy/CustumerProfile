@@ -8,5 +8,11 @@ export default class SocialAccount {
   public setUUID(value: string) {
     this.UUID = value;
   }
-  constructor(UUID: string, readonly SocialMedia: string) {}
+
+  public getSocialMedia(): string {
+    return this.SocialMedia;
+  }
+  constructor(UUID: string, readonly SocialMedia: string) {
+    this.UUID = UUID;
+  }
 }

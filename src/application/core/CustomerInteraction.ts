@@ -1,3 +1,4 @@
+import AdapterJson from "../../adapters/AdapterJson";
 import InteractionAdapter from "../../adapters/InteractionAdapter";
 import PurchaseAdapter from "../../adapters/PurchaseAdapter";
 import VisitAdapter from "../../adapters/VisitAdapter";
@@ -11,41 +12,38 @@ import CheckerPurchase from "../CheckerPurchase";
 import CheckerVisit from "../CheckerVisit";
 export default class CustomerInteraction {
   private interaction: any;
-  private checker: Checker;
-  private db: MongoDB;
-  private clientRepository: ClientRepository;
+  private db: ClientRepository;
+  private message: any;
 
-  constructor(message: any, db: MongoDB) {
+  constructor(message: any, db: ClientRepository) {
     this.db = db;
-    this.clientRepository = new ClientRepositoryMongo(this.db);
-    switch (message.tipo) {
-      case "interaction":
-        this.interaction = new InteractionAdapter(message);
-        this.checker = new CheckerInteraction();
-        break;
-      case "visit":
-        this.interaction = new VisitAdapter();
-        this.checker = new CheckerVisit(
-          this.interaction,
-          this.clientRepository
-        );
-        break;
-      case "purchase":
-        this.interaction = new PurchaseAdapter();
-        this.checker = new CheckerPurchase();
-        break;
-
-      default:
-        throw new Error("Unknown interaction");
-    }
+    this.message = message;
   }
 
   async run() {
-    let clientExist = await this.checker.verifyCustomer();
-    if (typeof clientExist != "undefined") {
-      this.clientRepository.findAndUpdate(clientExist, this.interaction);
+    let checker: Checker;
+    switch (this.message.Type) {
+      case "interaction":
+        this.interaction = new InteractionAdapter(this.message);
+        checker = new CheckerInteraction();
+        break;
+      case "visit":
+        this.interaction = new VisitAdapter(this.message);
+        checker = new CheckerVisit(this.interaction.adapt(), this.db);
+        break;
+      case "purchase":
+        this.interaction = new PurchaseAdapter();
+        checker = new CheckerPurchase();
+        break;
+      default:
+        throw new Error("Unknown interaction");
+    }
+    let clientExist = await checker.verifyCustomer();
+    this.interaction = AdapterJson(this.interaction);
+    if (clientExist == undefined) {
+      this.db.add(this.interaction);
     } else {
-      this.clientRepository.add(this.interaction);
+      this.db.findAndUpdate(clientExist, this.interaction);
     }
   }
 }

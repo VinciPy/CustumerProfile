@@ -60,7 +60,7 @@ export default class ClientRepositoryMongo implements ClientRepository {
   }
 
   async add(Client: Client): Promise<Client> {
-    let client = new this.Client(Client);
+    let client = new this.Client({ Client });
     return await client.save();
   }
 
@@ -74,21 +74,39 @@ export default class ClientRepositoryMongo implements ClientRepository {
     }).exec();
   }
 
-  async findByIpAddress(IpAddress: string): Promise<Client> {
-    return await this.Client.find({ IpAddress: IpAddress }).exec();
+  async findByIpAddress(IpAddress: string): Promise<Client | undefined> {
+    let client = await this.Client.find({ IpAddress: IpAddress }).exec();
+    if (client.length == 0) {
+      return undefined;
+    }
+    return client;
   }
 
-  async findBySocialAccount(SocialAccount: SocialAccount): Promise<Client> {
-    return await this.Client.find({
+  async findBySocialAccount(
+    SocialAccount: SocialAccount
+  ): Promise<Client | undefined> {
+    let client = await this.Client.find({
       SocialAccount: SocialAccount.getUUID(),
     }).exec();
+    console.log(client);
+    if (client.length == 0) {
+      return undefined;
+    }
+    return client;
   }
 
-  async findByDevice(Device: Device): Promise<Client> {
-    return await this.Client.find({ "Devices.UUID": Device.getUUID() }).exec();
+  async findByDevice(Device: Device): Promise<Client | undefined> {
+    let client = await this.Client.find({
+      "Devices.UUID": Device.getUUID(),
+    }).exec();
+    if (client.length == 0) {
+      return undefined;
+    }
+    return client;
   }
 
   async all() {
-    return await this.Client.find().exec();
+    let clients = await this.Client.find().exec();
+    return clients;
   }
 }

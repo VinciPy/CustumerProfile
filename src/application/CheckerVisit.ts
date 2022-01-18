@@ -26,6 +26,7 @@ export default class CheckerVisit implements Checker {
     if (SocialAccount && Device) {
       return Device;
     }
+    return undefined;
   }
 
   async ipExist() {
@@ -40,6 +41,7 @@ export default class CheckerVisit implements Checker {
     let client = await this.ClientRepository.findBySocialAccount(
       this.Visit.getSocialAccount()
     );
+    console.log(client);
     if (!client) return false;
     return client;
   }

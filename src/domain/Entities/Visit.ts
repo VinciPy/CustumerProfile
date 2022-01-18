@@ -1,4 +1,5 @@
 import Device from "./Device";
+import Location from "./Location";
 import SocialAccount from "./SocialAccount";
 
 enum Types {
@@ -10,7 +11,7 @@ export default class Visit {
   private DateTime: Date;
   private IpAddress: string;
   private Location: Location;
-  private Type: Types;
+  private Type: string;
   private SocialAccount: SocialAccount;
   private Device: Device;
 
@@ -36,5 +37,31 @@ export default class Visit {
     this.IpAddress = value;
   }
 
-  constructor() {}
+  public getLocation(): Location {
+    return this.Location;
+  }
+
+  public getType(): string {
+    return this.Type;
+  }
+
+  public getDateTime() {
+    return this.DateTime;
+  }
+
+  constructor(
+    DateTime: Date,
+    IpAddress: string,
+    Location: Location,
+    Type: string,
+    SocialAccount: SocialAccount,
+    Device: Device
+  ) {
+    (this.DateTime = DateTime),
+      (this.IpAddress = IpAddress),
+      (this.Location = Location),
+      (this.Type = Type),
+      (this.SocialAccount = SocialAccount),
+      (this.Device = Device);
+  }
 }
