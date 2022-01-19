@@ -11,37 +11,15 @@ export default class CheckerPurchase implements Checker {
     this.ClientRepository = ClientRepository;
   }
   async verifyCustomer(): Promise<Client | undefined> {
-    let ipExist = await this.ipExist();
-    let SocialAccount = await this.SocialAccountExist();
     let Device = await this.DeviceExist();
     let cpf = await this.CpfExist();
-    if (SocialAccount && ipExist) {
-      return SocialAccount;
+    if (cpf) {
+      return cpf;
     }
-    if (ipExist && Device) {
-      return Device;
-    }
-    if (SocialAccount && Device) {
+    if (Device) {
       return Device;
     }
     return undefined;
-  }
-
-  async ipExist() {
-    let client = await this.ClientRepository.findByIpAddress(
-      this.Purchase.getIpAddress()
-    );
-    if (!client) return false;
-    return client;
-  }
-
-  async SocialAccountExist() {
-    let client = await this.ClientRepository.findBySocialAccount(
-      this.Purchase.getSocialAccount()
-    );
-    console.log(client);
-    if (!client) return false;
-    return client;
   }
 
   async DeviceExist() {
@@ -53,7 +31,9 @@ export default class CheckerPurchase implements Checker {
   }
 
   async CpfExist() {
-    let client = await this.ClientRepository.findByCpf(this.Purchase.getCpf());
+    let client = await this.ClientRepository.findByCpf(
+      this.Purchase.getClient().getCpf()
+    );
     if (!client) return false;
     return client;
   }

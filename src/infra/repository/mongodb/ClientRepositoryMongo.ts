@@ -56,6 +56,14 @@ export default class ClientRepositoryMongo implements ClientRepository {
           SocialMedia: String,
         },
       ],
+      Purchases: [
+        {
+          DatePurchase: Date,
+          Amount: Number,
+          Discount: Number,
+          Products: [],
+        },
+      ],
     });
   }
 
@@ -125,6 +133,9 @@ export default class ClientRepositoryMongo implements ClientRepository {
 
   async findByCpf(Client: any): Promise<Client> {
     let client = await this.Client.find({ Cpf: Client.getCpf() }).exec();
+    if (client.length == 0) {
+      return undefined;
+    }
     return client;
   }
 }

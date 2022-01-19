@@ -50,6 +50,7 @@ const AdapterJson = (Visit: Visit) => {
           : "",
       },
     ],
+    Purchases: [{}],
   };
   return json;
 };

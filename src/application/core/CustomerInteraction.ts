@@ -32,7 +32,7 @@ export default class CustomerInteraction {
         checker = new CheckerVisit(this.interaction.adapt(), this.db);
         break;
       case "purchase":
-        this.interaction = new PurchaseAdapter();
+        this.interaction = new PurchaseAdapter(this.message);
         checker = new CheckerPurchase(this.interaction.adapt(), this.db);
         break;
       default:
