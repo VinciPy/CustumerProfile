@@ -59,19 +59,33 @@ export default class ClientRepositoryMongo implements ClientRepository {
     });
   }
 
-  async add(Client: Client): Promise<Client> {
-    let client = new this.Client({ Client });
+  async add(Client: any): Promise<Client> {
+    let client = new this.Client(Client);
+    console.log(client);
     return await client.save();
   }
 
   async findByUUID(Client: Client): Promise<Client> {
-    return await this.Client.findById(Client.getUUID());
+    return await this.Client.find({ UUID: Client.getUUID() });
   }
 
-  async findAndUpdate(Client: Client, ClientNew: Client): Promise<Client> {
-    return await this.Client.findByIdAndUpdate(Client.getUUID(), {
-      Client,
-    }).exec();
+  async findAndUpdate(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      { _id: Client[0]._id },
+      { $push: { Visits: ClientNew.Visits[0] } }
+    ).exec();
+    if (!this.findByDevice(ClientNew.Device._id)) {
+      await this.Client.findOneAndUpdate(
+        { _id: Client[0]._id },
+        { $push: { Visits: ClientNew.Device } }
+      ).exec();
+    }
+    if (!this.findBySocialAccount(ClientNew.SocialAccount.id)) {
+      await this.Client.findOneAndUpdate(
+        { _id: Client[0]._id },
+        { $push: { Visits: ClientNew.SocialAccount } }
+      ).exec();
+    }
   }
 
   async findByIpAddress(IpAddress: string): Promise<Client | undefined> {
@@ -86,9 +100,8 @@ export default class ClientRepositoryMongo implements ClientRepository {
     SocialAccount: SocialAccount
   ): Promise<Client | undefined> {
     let client = await this.Client.find({
-      SocialAccount: SocialAccount.getUUID(),
+      SocialAccounts: SocialAccount.getUUID(),
     }).exec();
-    console.log(client);
     if (client.length == 0) {
       return undefined;
     }
@@ -108,5 +121,10 @@ export default class ClientRepositoryMongo implements ClientRepository {
   async all() {
     let clients = await this.Client.find().exec();
     return clients;
+  }
+
+  async findByCpf(Client: any): Promise<Client> {
+    let client = await this.Client.find({ Cpf: Client.getCpf() }).exec();
+    return client;
   }
 }

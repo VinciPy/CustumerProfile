@@ -1,11 +1,10 @@
 import Visit from "../domain/Entities/Visit";
 
 const AdapterJson = (Visit: Visit) => {
-  console.log(Visit);
   let json = {
-    //Name: Visit.getName() ? Visit.getName() : "",
-    //Cellphone: Visit.getCellphone() ? Visit.getCellphone() : "",
-    //Cpf: Visit.getCpf() ? Visit.getCpf() : "",
+    Name: "",
+    Cellphone: "",
+    Cpf: "",
     Location: [
       {
         Country: Visit.getLocation() ? Visit.getLocation().getCountry() : "",
@@ -26,18 +25,18 @@ const AdapterJson = (Visit: Visit) => {
       {
         DateTime: Visit.getDateTime(),
         IpAddress: Visit.getIpAddress(),
-        Location: Visit.getLocation(),
+        Location: Visit.getLocation().getCountry(),
         Type: Visit.getType(),
-        SocialAccount: Visit.getSocialAccount(),
+        SocialAccount: Visit.getSocialAccount().getSocialMedia(),
         Device: Visit.getDevice().getUUID(),
       },
     ],
     FirstVisit: {
       DateTime: Visit.getDateTime(),
       IpAddress: Visit.getIpAddress(),
-      Location: Visit.getLocation(),
+      Location: Visit.getLocation().getCountry(),
       Type: Visit.getType(),
-      SocialAccount: Visit.getSocialAccount(),
+      SocialAccount: Visit.getSocialAccount().getSocialMedia(),
       Device: Visit.getDevice().getUUID(),
     },
     IpAddress: Visit.getIpAddress(),

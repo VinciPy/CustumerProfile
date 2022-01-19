@@ -13,8 +13,8 @@ export default class VisitAdapter implements Adapter {
   }
 
   adapt() {
-    let DateTime = new Date(this.Message.DateTime);
-    let ipAddress = this.Message.ipAddress;
+    let DateTime = new Date();
+    let ipAddress = this.Message.IpAddress;
     let location = new Location(
       this.Message.Location.Country,
       this.Message.Location.State,

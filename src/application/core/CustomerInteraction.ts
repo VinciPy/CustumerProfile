@@ -25,7 +25,7 @@ export default class CustomerInteraction {
     switch (this.message.Type) {
       case "interaction":
         this.interaction = new InteractionAdapter(this.message);
-        checker = new CheckerInteraction();
+        checker = new CheckerInteraction(this.interaction.adapt(), this.db);
         break;
       case "visit":
         this.interaction = new VisitAdapter(this.message);
@@ -33,17 +33,19 @@ export default class CustomerInteraction {
         break;
       case "purchase":
         this.interaction = new PurchaseAdapter();
-        checker = new CheckerPurchase();
+        checker = new CheckerPurchase(this.interaction.adapt(), this.db);
         break;
       default:
         throw new Error("Unknown interaction");
     }
     let clientExist = await checker.verifyCustomer();
-    this.interaction = AdapterJson(this.interaction);
+    console.log(clientExist);
     if (clientExist == undefined) {
-      this.db.add(this.interaction);
+      let client_json = AdapterJson(this.interaction.adapt());
+      this.db.add(client_json);
     } else {
-      this.db.findAndUpdate(clientExist, this.interaction);
+      console.log(clientExist);
+      this.db.findAndUpdate(clientExist, AdapterJson(this.interaction.adapt()));
     }
   }
 }

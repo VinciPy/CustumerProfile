@@ -11,11 +11,13 @@ export default interface ClientRepository {
 
   findByDevice(Device: Device): Promise<Client | undefined>;
 
-  findAndUpdate(Client: Client, ClientNew: Client): Promise<Client | undefined>;
+  findAndUpdate(Client: Client, ClientNew: any);
 
   findByUUID(Client: Client): Promise<Client | undefined>;
 
-  add(Client: Client): Promise<Client | undefined>;
+  add(Client: any): Promise<Client | undefined>;
+
+  findByCpf(Client: any): Promise<Client | undefined>;
 
   all(): Promise<[] | undefined>;
 }
