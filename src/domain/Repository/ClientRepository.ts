@@ -9,7 +9,7 @@ export default interface ClientRepository {
     SocialAccount: SocialAccount
   ): Promise<Client | undefined>;
 
-  findByDevice(Device: Device): Promise<Client | undefined>;
+  findByDevice(Device: Device | undefined): Promise<Client | undefined>;
 
   findAndUpdate(Client: Client, ClientNew: any);
 

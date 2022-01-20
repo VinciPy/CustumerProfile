@@ -5,25 +5,25 @@ import SocialAccount from "./SocialAccount";
 import Visit from "./Visit";
 
 export default class Client {
-  private UUID: string;
-  private Name: string;
-  private Cellphone: string;
-  private Cpf: Cpf;
-  private Location: Location;
-  private Devices: Device[];
-  private Visits: Visit[];
-  private FirstVisit: Visit;
-  private IpAddress: string;
-  private SocialAccount: SocialAccount;
+  private UUID?: string;
+  private Name?: string;
+  private Cellphone?: string;
+  private Cpf?: Cpf;
+  private Location?: Location;
+  private Devices?: Device[];
+  private Visits?: Visit[];
+  private FirstVisit?: Visit;
+  private IpAddress?: string;
+  private SocialAccount?: SocialAccount;
 
-  public getSocialAccount(): SocialAccount {
+  public getSocialAccount(): SocialAccount | undefined {
     return this.SocialAccount;
   }
   public setSocialAccount(value: SocialAccount) {
     this.SocialAccount = value;
   }
 
-  public getFirstVisit(): Visit {
+  public getFirstVisit(): Visit | undefined {
     return this.FirstVisit;
   }
 
@@ -31,7 +31,7 @@ export default class Client {
     this.FirstVisit = value;
   }
 
-  public getUUID(): string {
+  public getUUID(): string | undefined {
     return this.UUID;
   }
 
@@ -39,7 +39,7 @@ export default class Client {
     this.UUID = value;
   }
 
-  public getLocation(): Location {
+  public getLocation(): Location | undefined {
     return this.Location;
   }
 
@@ -47,7 +47,7 @@ export default class Client {
     this.Location = value;
   }
 
-  public getDevices(): Device[] {
+  public getDevices(): Device[] | undefined {
     return this.Devices;
   }
 
@@ -55,7 +55,7 @@ export default class Client {
     this.Devices = value;
   }
 
-  public getVisits(): Visit[] {
+  public getVisits(): Visit[] | undefined {
     return this.Visits;
   }
 
@@ -63,8 +63,16 @@ export default class Client {
     this.Visits = value;
   }
 
-  public getCpf(): Cpf {
+  public getCpf(): Cpf | undefined {
     return this.Cpf;
+  }
+
+  public getName(): string | undefined {
+    return this.Name;
+  }
+
+  public getCellphone(): string | undefined {
+    return this.Cellphone;
   }
 
   constructor(Name: string, Cellphone: string, Cpf: Cpf) {

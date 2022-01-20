@@ -33,6 +33,7 @@ export default class CustomerInteraction {
         break;
       case "purchase":
         this.interaction = new PurchaseAdapter(this.message);
+        console.log(this.interaction.adapt());
         checker = new CheckerPurchase(this.interaction.adapt(), this.db);
         break;
       default:

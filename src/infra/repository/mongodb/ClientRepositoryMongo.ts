@@ -15,7 +15,7 @@ export default class ClientRepositoryMongo implements ClientRepository {
       UUID: String,
       Name: String,
       Cellphone: String,
-      Cpf: Number,
+      Cpf: String,
       Location: [
         {
           Country: String,
@@ -78,21 +78,28 @@ export default class ClientRepositoryMongo implements ClientRepository {
   }
 
   async findAndUpdate(Client: any, ClientNew: any) {
-    await this.Client.findOneAndUpdate(
-      { _id: Client[0]._id },
-      { $push: { Visits: ClientNew.Visits[0] } }
-    ).exec();
-    if (!this.findByDevice(ClientNew.Device._id)) {
+    if (ClientNew.Purchases) {
       await this.Client.findOneAndUpdate(
         { _id: Client[0]._id },
-        { $push: { Visits: ClientNew.Device } }
+        { $push: { Purchases: ClientNew.Purchases[0] } }
       ).exec();
-    }
-    if (!this.findBySocialAccount(ClientNew.SocialAccount.id)) {
+    } else {
       await this.Client.findOneAndUpdate(
         { _id: Client[0]._id },
-        { $push: { Visits: ClientNew.SocialAccount } }
+        { $push: { Visits: ClientNew.Visits[0] } }
       ).exec();
+      if (!this.findByDevice(ClientNew.Device._id)) {
+        await this.Client.findOneAndUpdate(
+          { _id: Client[0]._id },
+          { $push: { Visits: ClientNew.Device } }
+        ).exec();
+      }
+      if (!this.findBySocialAccount(ClientNew.SocialAccount.id)) {
+        await this.Client.findOneAndUpdate(
+          { _id: Client[0]._id },
+          { $push: { Visits: ClientNew.SocialAccount } }
+        ).exec();
+      }
     }
   }
 
@@ -131,8 +138,8 @@ export default class ClientRepositoryMongo implements ClientRepository {
     return clients;
   }
 
-  async findByCpf(Client: any): Promise<Client> {
-    let client = await this.Client.find({ Cpf: Client.getCpf() }).exec();
+  async findByCpf(Cpf: any): Promise<Client | undefined> {
+    let client = await this.Client.find({ Cpf: Cpf }).exec();
     if (client.length == 0) {
       return undefined;
     }

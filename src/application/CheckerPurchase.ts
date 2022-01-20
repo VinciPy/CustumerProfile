@@ -31,8 +31,10 @@ export default class CheckerPurchase implements Checker {
   }
 
   async CpfExist() {
+    if (this.Purchase.getClient().getCpf()?.getValue() == undefined)
+      return false;
     let client = await this.ClientRepository.findByCpf(
-      this.Purchase.getClient().getCpf()
+      this.Purchase.getClient().getCpf()?.getValue()
     );
     if (!client) return false;
     return client;

@@ -1,11 +1,8 @@
 import Client from "../domain/Entities/Client";
 import Cpf from "../domain/Entities/Cpf";
 import Device from "../domain/Entities/Device";
-import Interaction from "../domain/Entities/Interaction";
 import Location from "../domain/Entities/Location";
 import Purchase from "../domain/Entities/Purchase";
-import SocialAccount from "../domain/Entities/SocialAccount";
-import Visit from "../domain/Entities/Visit";
 import Adapter from "./Adapter";
 
 export default class PurchaseAdapter implements Adapter {
@@ -20,8 +17,8 @@ export default class PurchaseAdapter implements Adapter {
     let Discount = this.Message.Discount;
     let client = new Client(
       this.Message.Client.Name,
-      this.Message.CLient.Cellphone,
-      new Cpf(this.Message.Client.Cpf)
+      this.Message.Client.Cellphone,
+      new Cpf(this.Message.Client.CPF)
     );
     let location = new Location(
       this.Message.Location.Country,
