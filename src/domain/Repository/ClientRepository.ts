@@ -5,11 +5,9 @@ import SocialAccount from "../Entities/SocialAccount";
 export default interface ClientRepository {
   findByIpAddress(IpAddress: string): Promise<Client | undefined>;
 
-  findBySocialAccount(
-    SocialAccount: SocialAccount
-  ): Promise<Client | undefined>;
+  findBySocialAccount(SocialAccount: string): Promise<Client | undefined>;
 
-  findByDevice(Device: Device | undefined): Promise<Client | undefined>;
+  findByDevice(Device: string | undefined): Promise<Client | undefined>;
 
   findAndUpdate(Client: Client, ClientNew: any);
 

@@ -24,7 +24,7 @@ export default class CheckerPurchase implements Checker {
 
   async DeviceExist() {
     let client = await this.ClientRepository.findByDevice(
-      this.Purchase.getDevice()
+      this.Purchase.getDevice()?.getUUID()
     );
     if (!client) return false;
     return client;

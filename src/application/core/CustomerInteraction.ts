@@ -3,9 +3,6 @@ import InteractionAdapter from "../../adapters/InteractionAdapter";
 import PurchaseAdapter from "../../adapters/PurchaseAdapter";
 import VisitAdapter from "../../adapters/VisitAdapter";
 import ClientRepository from "../../domain/Repository/ClientRepository";
-import Connection from "../../infra/database/Connection";
-import MongoDB from "../../infra/database/MongoDB";
-import ClientRepositoryMongo from "../../infra/repository/mongodb/ClientRepositoryMongo";
 import Checker from "../Checker";
 import CheckerInteraction from "../CheckerInteraction";
 import CheckerPurchase from "../CheckerPurchase";
@@ -45,7 +42,6 @@ export default class CustomerInteraction {
       let client_json = AdapterJson(this.interaction.adapt());
       this.db.add(client_json);
     } else {
-      console.log(clientExist);
       this.db.findAndUpdate(clientExist, AdapterJson(this.interaction.adapt()));
     }
   }

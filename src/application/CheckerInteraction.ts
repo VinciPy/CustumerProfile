@@ -36,7 +36,7 @@ export default class CheckerInteraction implements Checker {
 
   async SocialAccountExist() {
     let client = await this.ClientRepository.findBySocialAccount(
-      this.Visit.getSocialAccount()
+      this.Visit.getSocialAccount().getUUID()
     );
     console.log(client);
     if (!client) return false;
@@ -45,7 +45,7 @@ export default class CheckerInteraction implements Checker {
 
   async DeviceExist() {
     let client = await this.ClientRepository.findByDevice(
-      this.Visit.getDevice()
+      this.Visit.getDevice().getUUID()
     );
     if (!client) return false;
     return client;

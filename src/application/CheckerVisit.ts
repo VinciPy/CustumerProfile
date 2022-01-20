@@ -20,7 +20,7 @@ export default class CheckerVisit implements Checker {
     if (SocialAccount && ipExist) {
       return SocialAccount;
     }
-    if (ipExist && Device) {
+    if (Device) {
       return Device;
     }
     if (SocialAccount && Device) {
@@ -39,7 +39,7 @@ export default class CheckerVisit implements Checker {
 
   async SocialAccountExist() {
     let client = await this.ClientRepository.findBySocialAccount(
-      this.Visit.getSocialAccount()
+      this.Visit.getSocialAccount().getUUID()
     );
     console.log(client);
     if (!client) return false;
@@ -48,7 +48,7 @@ export default class CheckerVisit implements Checker {
 
   async DeviceExist() {
     let client = await this.ClientRepository.findByDevice(
-      this.Visit.getDevice()
+      this.Visit.getDevice().getUUID()
     );
     if (!client) return false;
     return client;

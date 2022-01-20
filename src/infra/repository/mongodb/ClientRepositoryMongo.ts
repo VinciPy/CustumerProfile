@@ -88,13 +88,13 @@ export default class ClientRepositoryMongo implements ClientRepository {
         { _id: Client[0]._id },
         { $push: { Visits: ClientNew.Visits[0] } }
       ).exec();
-      if (!this.findByDevice(ClientNew.Device._id)) {
+      if (!this.findByDevice(ClientNew.Device)) {
         await this.Client.findOneAndUpdate(
           { _id: Client[0]._id },
           { $push: { Visits: ClientNew.Device } }
         ).exec();
       }
-      if (!this.findBySocialAccount(ClientNew.SocialAccount.id)) {
+      if (!this.findBySocialAccount(ClientNew.SocialAccount)) {
         await this.Client.findOneAndUpdate(
           { _id: Client[0]._id },
           { $push: { Visits: ClientNew.SocialAccount } }
@@ -112,21 +112,21 @@ export default class ClientRepositoryMongo implements ClientRepository {
   }
 
   async findBySocialAccount(
-    SocialAccount: SocialAccount
+    SocialAccount: string
   ): Promise<Client | undefined> {
-    let client = await this.Client.find({
-      SocialAccounts: SocialAccount.getUUID(),
-    }).exec();
+    let client = await this.Client.find()
+      .elemMatch("SocialAccounts", { _id: Device })
+      .exec();
     if (client.length == 0) {
       return undefined;
     }
     return client;
   }
 
-  async findByDevice(Device: Device): Promise<Client | undefined> {
-    let client = await this.Client.find({
-      "Devices.UUID": Device.getUUID(),
-    }).exec();
+  async findByDevice(Device: string): Promise<Client | undefined> {
+    let client = await this.Client.find()
+      .elemMatch("Devices", { _id: Device })
+      .exec();
     if (client.length == 0) {
       return undefined;
     }
