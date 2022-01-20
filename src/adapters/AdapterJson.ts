@@ -30,6 +30,7 @@ const AdapterJson = (Visit: any) => {
           Amount: Visit.getAmount(),
           Discount: Visit.getDiscount(),
           Products: Visit.getProducts(),
+          CompanyId: Visit.getCompanyId(),
         },
       ],
     };
@@ -62,6 +63,7 @@ const AdapterJson = (Visit: any) => {
           Type: Visit.getType(),
           SocialAccount: Visit.getSocialAccount().getSocialMedia(),
           Device: Visit.getDevice().getUUID(),
+          CompanyId: Visit.getCompanyId(),
         },
       ],
       FirstVisit: {

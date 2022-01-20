@@ -39,6 +39,7 @@ export default class ClientRepositoryMongo implements ClientRepository {
           Type: String,
           SocialAccount: String,
           Device: String,
+          CompanyId: String,
         },
       ],
       FirstVisit: {
@@ -62,6 +63,7 @@ export default class ClientRepositoryMongo implements ClientRepository {
           Amount: Number,
           Discount: Number,
           Products: [],
+          CompanyId: String,
         },
       ],
     });
@@ -115,7 +117,7 @@ export default class ClientRepositoryMongo implements ClientRepository {
     SocialAccount: string
   ): Promise<Client | undefined> {
     let client = await this.Client.find()
-      .elemMatch("SocialAccounts", { _id: Device })
+      .elemMatch("SocialAccounts", { _id: SocialAccount })
       .exec();
     if (client.length == 0) {
       return undefined;

@@ -49,6 +49,9 @@ export default class Visit {
   public getDateTime() {
     return this.DateTime;
   }
+  public getCompanyId() {
+    return this.CompanyId;
+  }
 
   constructor(
     DateTime: Date,

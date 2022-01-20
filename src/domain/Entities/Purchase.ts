@@ -63,4 +63,8 @@ export default class Purchase {
   public getDatePurchase() {
     return this.DatePurchase;
   }
+
+  public getCompanyId() {
+    return this.CompanyId;
+  }
 }

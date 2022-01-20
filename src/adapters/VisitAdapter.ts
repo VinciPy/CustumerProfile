@@ -1,5 +1,4 @@
 import Device from "../domain/Entities/Device";
-import Interaction from "../domain/Entities/Interaction";
 import Location from "../domain/Entities/Location";
 import SocialAccount from "../domain/Entities/SocialAccount";
 import Visit from "../domain/Entities/Visit";
@@ -15,6 +14,7 @@ export default class VisitAdapter implements Adapter {
   adapt() {
     let DateTime = new Date();
     let ipAddress = this.Message.IpAddress;
+    let CompanyId = this.Message.CompanyId;
     let location = new Location(
       this.Message.Location.Country,
       this.Message.Location.State,
@@ -35,7 +35,8 @@ export default class VisitAdapter implements Adapter {
       location,
       "online",
       socialAccount,
-      device
+      device,
+      CompanyId
     );
   }
 }

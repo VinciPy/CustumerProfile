@@ -15,6 +15,7 @@ export default class PurchaseAdapter implements Adapter {
     let DateTime = new Date();
     let Amount = this.Message.Amount;
     let Discount = this.Message.Discount;
+    let CompanyId = this.Message.CompanyId;
     let client = new Client(
       this.Message.Client.Name,
       this.Message.Client.Cellphone,
@@ -38,6 +39,7 @@ export default class PurchaseAdapter implements Adapter {
       Discount,
       Products,
       location,
+      CompanyId,
       device
     );
   }
