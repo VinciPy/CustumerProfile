@@ -10,6 +10,7 @@ export default class Purchase {
   Products: string[];
   Device?: Device;
   Location: Location;
+  CompanyId: string;
 
   constructor(
     Client: Client,
@@ -18,6 +19,7 @@ export default class Purchase {
     Discount: number,
     Products: string[],
     Location: Location,
+    CompanyId: string,
     Device?: Device
   ) {
     this.Client = Client;
@@ -26,6 +28,7 @@ export default class Purchase {
     this.Discount = Discount;
     this.Products = Products;
     this.Location = Location;
+    this.CompanyId = CompanyId;
     this.Device = Device;
   }
 

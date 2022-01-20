@@ -14,6 +14,7 @@ export default class Visit {
   private Type: string;
   private SocialAccount: SocialAccount;
   private Device: Device;
+  private CompanyId: string;
 
   public getDevice(): Device {
     return this.Device;
@@ -55,13 +56,14 @@ export default class Visit {
     Location: Location,
     Type: string,
     SocialAccount: SocialAccount,
-    Device: Device
+    Device: Device,
+    CompanyId: string
   ) {
     (this.DateTime = DateTime),
       (this.IpAddress = IpAddress),
       (this.Location = Location),
       (this.Type = Type),
       (this.SocialAccount = SocialAccount),
-      (this.Device = Device);
+      ((this.Device = Device), (this.CompanyId = CompanyId));
   }
 }
