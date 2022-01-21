@@ -37,7 +37,6 @@ export default class CustomerInteraction {
         throw new Error("Unknown interaction");
     }
     let clientExist = await checker.verifyCustomer();
-    console.log(clientExist);
     if (clientExist == undefined) {
       let client_json = AdapterJson(this.interaction.adapt());
       this.db.add(client_json);

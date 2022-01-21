@@ -80,27 +80,20 @@ export default class ClientRepositoryMongo implements ClientRepository {
   }
 
   async findAndUpdate(Client: any, ClientNew: any) {
+    let deviceexist = await this.findByDevice(ClientNew.Devices[0]._id);
     if (ClientNew.Purchases) {
-      await this.Client.findOneAndUpdate(
-        { _id: Client[0]._id },
-        { $push: { Purchases: ClientNew.Purchases[0] } }
-      ).exec();
-    } else {
-      await this.Client.findOneAndUpdate(
-        { _id: Client[0]._id },
-        { $push: { Visits: ClientNew.Visits[0] } }
-      ).exec();
-      if (!this.findByDevice(ClientNew.Device)) {
-        await this.Client.findOneAndUpdate(
-          { _id: Client[0]._id },
-          { $push: { Visits: ClientNew.Device } }
-        ).exec();
+      await this.clientUpdate(Client, ClientNew);
+      await this.appendPurchases(Client, ClientNew);
+      if (!deviceexist) {
+        await this.appendDevice(Client, ClientNew);
       }
-      if (!this.findBySocialAccount(ClientNew.SocialAccount)) {
-        await this.Client.findOneAndUpdate(
-          { _id: Client[0]._id },
-          { $push: { Visits: ClientNew.SocialAccount } }
-        ).exec();
+    } else {
+      this.appendVisits(Client, ClientNew);
+      if (deviceexist) {
+        this.appendDevice(Client, ClientNew);
+      }
+      if (!this.findBySocialAccount(ClientNew.SocialAccounts[0]._id)) {
+        this.appendSocialAccounts(Client, ClientNew);
       }
     }
   }
@@ -146,5 +139,41 @@ export default class ClientRepositoryMongo implements ClientRepository {
       return undefined;
     }
     return client;
+  }
+  private async appendPurchases(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      { _id: Client[0]._id },
+      { $push: { Purchases: ClientNew.Purchases[0] } }
+    ).exec();
+  }
+
+  private async clientUpdate(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      {
+        _id: Client[0]._id,
+      },
+      { Cpf: ClientNew.Cpf }
+    );
+  }
+
+  private async appendDevice(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      { _id: Client[0]._id },
+      { $push: { Devices: ClientNew.Devices[0] } }
+    ).exec();
+  }
+
+  private async appendVisits(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      { _id: Client[0]._id },
+      { $push: { Visits: ClientNew.Visits[0] } }
+    ).exec();
+  }
+
+  private async appendSocialAccounts(Client: any, ClientNew: any) {
+    await this.Client.findOneAndUpdate(
+      { _id: Client[0]._id },
+      { $push: { SocialAccounts: ClientNew.SocialAccounts[0] } }
+    ).exec();
   }
 }
