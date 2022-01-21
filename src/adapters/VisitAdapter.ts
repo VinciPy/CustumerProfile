@@ -21,7 +21,7 @@ export default class VisitAdapter implements Adapter {
       this.Message.Location.City
     );
     let socialAccount = new SocialAccount(
-      this.Message.SocialAccount.UIID,
+      this.Message.SocialAccount.UUID,
       this.Message.SocialAccount.SocialMedia
     );
     let device = new Device(

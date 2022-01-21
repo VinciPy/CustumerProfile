@@ -11,6 +11,7 @@ export default class Purchase {
   Device?: Device;
   Location: Location;
   CompanyId: string;
+  IpAddress?: string;
 
   constructor(
     Client: Client,
@@ -20,7 +21,8 @@ export default class Purchase {
     Products: string[],
     Location: Location,
     CompanyId: string,
-    Device?: Device
+    Device?: Device,
+    IpAddress?: string
   ) {
     this.Client = Client;
     this.DatePurchase = DatePurchase;
@@ -30,6 +32,7 @@ export default class Purchase {
     this.Location = Location;
     this.CompanyId = CompanyId;
     this.Device = Device;
+    this.IpAddress = IpAddress;
   }
 
   public getDevice(): Device | undefined {
@@ -66,5 +69,9 @@ export default class Purchase {
 
   public getCompanyId() {
     return this.CompanyId;
+  }
+
+  public getIpAddress() {
+    return this.IpAddress;
   }
 }

@@ -13,11 +13,15 @@ export default class CheckerPurchase implements Checker {
   async verifyCustomer(): Promise<Client | undefined> {
     let Device = await this.DeviceExist();
     let cpf = await this.CpfExist();
+    let ipExist = await this.ipExist();
     if (cpf) {
       return cpf;
     }
     if (Device) {
       return Device;
+    }
+    if (ipExist) {
+      return ipExist;
     }
     return undefined;
   }
@@ -35,6 +39,17 @@ export default class CheckerPurchase implements Checker {
       return false;
     let client = await this.ClientRepository.findByCpf(
       this.Purchase.getClient().getCpf()?.getValue()
+    );
+    if (!client) return false;
+    return client;
+  }
+
+  async ipExist() {
+    if (!this.Purchase.getIpAddress()) {
+      return false;
+    }
+    let client = await this.ClientRepository.findByIpAddress(
+      this.Purchase.getIpAddress()
     );
     if (!client) return false;
     return client;

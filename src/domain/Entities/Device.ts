@@ -20,4 +20,8 @@ export default class Device {
   public getTipo(): string {
     return this.Tipo;
   }
+
+  public getDescription(): string {
+    return this.Description;
+  }
 }

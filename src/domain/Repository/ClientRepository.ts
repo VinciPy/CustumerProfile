@@ -3,7 +3,7 @@ import Device from "../Entities/Device";
 import SocialAccount from "../Entities/SocialAccount";
 
 export default interface ClientRepository {
-  findByIpAddress(IpAddress: string): Promise<Client | undefined>;
+  findByIpAddress(IpAddress: string | undefined): Promise<Client | undefined>;
 
   findBySocialAccount(SocialAccount: string): Promise<Client | undefined>;
 

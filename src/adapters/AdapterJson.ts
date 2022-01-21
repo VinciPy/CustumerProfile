@@ -22,6 +22,9 @@ const AdapterJson = (Visit: any) => {
         {
           Tipo: Visit.getDevice()?.getTipo(),
           UUID: Visit.getDevice()?.getUUID(),
+          Description: Visit.getDevice()?.getDescription()
+            ? Visit.getDevice()
+            : "",
         },
       ],
       Purchases: [
@@ -31,6 +34,7 @@ const AdapterJson = (Visit: any) => {
           Discount: Visit.getDiscount(),
           Products: Visit.getProducts(),
           CompanyId: Visit.getCompanyId(),
+          IpAddress: Visit.getIpAddress(),
         },
       ],
     };
@@ -52,6 +56,7 @@ const AdapterJson = (Visit: any) => {
       Devices: [
         {
           Tipo: Visit.getDevice().getTipo(),
+          Description: Visit.getDevice().getDescription(),
           UUID: Visit.getDevice().getUUID(),
         },
       ],

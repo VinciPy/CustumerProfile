@@ -71,7 +71,6 @@ export default class ClientRepositoryMongo implements ClientRepository {
 
   async add(Client: any): Promise<Client> {
     let client = new this.Client(Client);
-    console.log(client);
     return await client.save();
   }
 
@@ -148,11 +147,13 @@ export default class ClientRepositoryMongo implements ClientRepository {
   }
 
   private async clientUpdate(Client: any, ClientNew: any) {
+    let cpf = ClientNew.Cpf ? ClientNew.Cpf : "";
+    let cellphone = ClientNew.Cellphone ? ClientNew.Cellphone : "";
     await this.Client.findOneAndUpdate(
       {
         _id: Client[0]._id,
       },
-      { Cpf: ClientNew.Cpf }
+      { Cpf: cpf, Cellphone: cellphone }
     );
   }
 
